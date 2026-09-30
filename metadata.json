@@ -1,7 +1,7 @@
 {
   "name": "Musicly",
   "description": "A feature-rich MPRIS media controller for the GNOME Shell top bar",
-  "uuid": "media-controller@satoru.local",
+  "uuid": "media-controller@shivarajm8234.github.io",
   "url": "https://github.com/shivarajm8234/Musicly",
   "shell-version": [
     "45",

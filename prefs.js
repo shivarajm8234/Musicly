@@ -11,19 +11,15 @@ export default class MusiclyPreferences extends ExtensionPreferences {
             title: _('Appearance'),
         });
 
-        const compactRow = new Adw.ActionRow({
+        const compactSwitch = new Adw.SwitchRow({
             title: _('Compact Mode'),
             subtitle: _('Show only the player icon without text'),
         });
-
-        const compactSwitch = new Adw.SwitchRow();
         
         // This is a placeholder for actual GSettings binding.
         // A complete extension would define a GSettings schema and bind this switch to it.
-        compactRow.add_suffix(compactSwitch);
-        compactRow.activatable_widget = compactSwitch;
 
-        group.add(compactRow);
+        group.add(compactSwitch);
         page.add(group);
         window.add(page);
     }

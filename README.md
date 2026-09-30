@@ -4,6 +4,8 @@ A feature-rich, modern MPRIS media controller extension for the GNOME Shell top 
 
 Musicly integrates directly into your GNOME desktop environment, providing seamless playback control, animated status visualization, and comprehensive media metadata display across all active MPRIS-compatible audio and video players.
 
+![Sample Output](image.png)
+
 ---
 
 ## Features
@@ -37,14 +39,14 @@ Musicly integrates directly into your GNOME desktop environment, providing seaml
 1. Clone the repository into your local GNOME Shell extensions directory:
 
 ```bash
-git clone https://github.com/shivarajm8234/Musicly.git ~/.local/share/gnome-shell/extensions/media-controller@satoru.local
+git clone https://github.com/shivarajm8234/Musicly.git ~/.local/share/gnome-shell/extensions/media-controller@shivarajm8234.github.io
 ```
 
 2. If you already have the repository cloned elsewhere:
 
 ```bash
 mkdir -p ~/.local/share/gnome-shell/extensions/
-cp -r media-controller ~/.local/share/gnome-shell/extensions/media-controller@satoru.local
+cp -r media-controller ~/.local/share/gnome-shell/extensions/media-controller@shivarajm8234.github.io
 ```
 
 3. Restart GNOME Shell:
@@ -54,7 +56,7 @@ cp -r media-controller ~/.local/share/gnome-shell/extensions/media-controller@sa
 4. Enable the extension:
 
 ```bash
-gnome-extensions enable media-controller@satoru.local
+gnome-extensions enable media-controller@shivarajm8234.github.io
 ```
 
 Alternatively, open the **Extensions** or **Extension Manager** application and toggle **Musicly** on.
@@ -94,8 +96,8 @@ journalctl -f -o cat /usr/bin/gnome-shell | grep -i "Musicly"
 To test changes live during development:
 
 ```bash
-gnome-extensions disable media-controller@satoru.local
-gnome-extensions enable media-controller@satoru.local
+gnome-extensions disable media-controller@shivarajm8234.github.io
+gnome-extensions enable media-controller@shivarajm8234.github.io
 ```
 
 ---

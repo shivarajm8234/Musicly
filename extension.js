@@ -222,7 +222,11 @@ class MediaIndicator extends PanelMenu.Button {
                 const [name, oldOwner, newOwner] = params.deepUnpack();
                 if (!name.startsWith('org.mpris.MediaPlayer2.')) return;
                 // Give MprisSource a moment to process, then re-sync
-                GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
+                if (this._nameOwnerChangedTimerId) {
+                    GLib.source_remove(this._nameOwnerChangedTimerId);
+                }
+                this._nameOwnerChangedTimerId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 500, () => {
+                    this._nameOwnerChangedTimerId = 0;
                     if (this._isDestroyed) return GLib.SOURCE_REMOVE;
                     this._syncPlayersFromSource();
                     return GLib.SOURCE_REMOVE;
@@ -231,7 +235,8 @@ class MediaIndicator extends PanelMenu.Button {
         );
 
         // Initial sync after a short delay to catch already-running players
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
+        this._initSyncTimerId = GLib.timeout_add(GLib.PRIORITY_DEFAULT, 1000, () => {
+            this._initSyncTimerId = 0;
             if (this._isDestroyed) return GLib.SOURCE_REMOVE;
             this._syncPlayersFromSource();
             return GLib.SOURCE_REMOVE;
@@ -594,7 +599,7 @@ class MediaIndicator extends PanelMenu.Button {
                     (proxy, error) => {
                         if (error || this._isDestroyed) return;
                         this._readProxyState();
-                        proxy.connect('g-properties-changed', () => {
+                        this._playerProxySignalId = proxy.connect('g-properties-changed', () => {
                             if (!this._isDestroyed) this._readProxyState();
                         });
                     }
@@ -609,6 +614,10 @@ class MediaIndicator extends PanelMenu.Button {
 
     _destroyPlayerProxy() {
         if (this._playerProxy) {
+            if (this._playerProxySignalId) {
+                try { this._playerProxy.disconnect(this._playerProxySignalId); } catch (_) {}
+                this._playerProxySignalId = 0;
+            }
             try { this._playerProxy.disconnectObject?.(this); } catch (_) {}
             this._playerProxy = null;
         }
@@ -1006,6 +1015,15 @@ class MediaIndicator extends PanelMenu.Button {
         this._stopPositionTimer();
         this._stopTopEqAnimation();
         this._destroyPlayerProxy();
+
+        if (this._nameOwnerChangedTimerId) {
+            GLib.source_remove(this._nameOwnerChangedTimerId);
+            this._nameOwnerChangedTimerId = 0;
+        }
+        if (this._initSyncTimerId) {
+            GLib.source_remove(this._initSyncTimerId);
+            this._initSyncTimerId = 0;
+        }
 
         if (this._dbusWatchId) {
             Gio.DBus.session.signal_unsubscribe(this._dbusWatchId);
