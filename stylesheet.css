@@ -1,0 +1,299 @@
+/* ── Top Bar Panel Indicator ── */
+.media-top-container {
+    spacing: 6px;
+    padding: 0 4px;
+    margin: 2px 2px;
+}
+
+.media-top-info-area {
+    spacing: 6px;
+    padding: 2px 6px;
+    border-radius: 9999px;
+    transition-duration: 200ms;
+}
+
+.media-top-info-area:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.media-top-label {
+    font-size: 10pt;
+    font-weight: 600;
+    max-width: 170px;
+    color: rgba(255, 255, 255, 0.92);
+}
+
+/* ── Top Bar Animated Mini Equalizer ── */
+.media-top-eq-box {
+    spacing: 2px;
+    padding: 0 2px;
+    height: 16px;
+}
+
+.media-top-eq-bar {
+    background-color: rgba(255, 255, 255, 0.45);
+    border-radius: 2px;
+    transition-duration: 120ms;
+}
+
+.media-top-eq-active {
+    background-color: #38bdf8;
+    box-shadow: 0 0 6px rgba(56, 189, 248, 0.5);
+}
+
+/* ── Top Bar Inline Control Buttons ── */
+.media-top-controls-box {
+    spacing: 2px;
+    padding-left: 2px;
+}
+
+.media-top-btn {
+    border-radius: 9999px;
+    padding: 4px 6px;
+    color: rgba(255, 255, 255, 0.75);
+    transition-duration: 150ms;
+}
+
+.media-top-btn:hover {
+    background-color: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+.media-top-btn:active {
+    background-color: rgba(255, 255, 255, 0.28);
+}
+
+.media-top-play-btn {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.95);
+    padding: 4px 7px;
+}
+
+.media-top-play-btn:hover {
+    background-color: rgba(56, 189, 248, 0.3);
+    color: #ffffff;
+}
+
+.media-top-btn-playing {
+    color: #38bdf8;
+    background-color: rgba(56, 189, 248, 0.2);
+}
+
+/* ── Popup Base & Card ── */
+.media-popup-base-item {
+    padding: 0 !important;
+    background-color: transparent !important;
+}
+
+.media-popup-card {
+    spacing: 14px;
+    padding: 16px;
+    min-width: 380px;
+    border-radius: 20px;
+    background-color: rgba(22, 22, 26, 0.96);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* ── Multi-Source Tabs Selector ── */
+.media-sources-section {
+    spacing: 8px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.media-sources-header {
+    spacing: 8px;
+}
+
+.media-sources-title {
+    font-size: 8.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.media-sources-badge {
+    font-size: 8pt;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 1px 6px;
+    border-radius: 9999px;
+}
+
+.media-sources-pills-box {
+    spacing: 6px;
+}
+
+.media-source-pill {
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    transition-duration: 150ms;
+}
+
+.media-source-pill:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.media-source-pill-active {
+    background-color: rgba(56, 189, 248, 0.18);
+    border-color: rgba(56, 189, 248, 0.5);
+}
+
+.media-source-pill-box {
+    spacing: 6px;
+}
+
+.media-source-pill-icon {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.media-source-pill-label {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    max-width: 140px;
+}
+
+.media-source-dot-playing {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background-color: #34d399;
+}
+
+.media-source-dot-paused {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Player Body (Art + Details) ── */
+.media-player-body {
+    spacing: 14px;
+}
+
+.media-album-art-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.media-album-fallback-icon {
+    color: rgba(255, 255, 255, 0.25);
+}
+
+.media-album-image {
+    border-radius: 16px;
+}
+
+.media-details-box {
+    spacing: 4px;
+}
+
+.media-app-badge {
+    font-size: 7.5pt;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    color: #38bdf8;
+    padding-bottom: 2px;
+}
+
+.media-popup-title {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.96);
+    max-width: 240px;
+}
+
+.media-popup-artist {
+    font-size: 9.5pt;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 240px;
+}
+
+/* ── Visualizer in Popup ── */
+.media-popup-visualizer {
+    spacing: 3px;
+    padding-top: 6px;
+    height: 24px;
+}
+
+.media-popup-visualizer-bar {
+    background-color: rgba(56, 189, 248, 0.65);
+    border-radius: 2px;
+    transition-duration: 120ms;
+}
+
+/* ── Progress / Seek Bar ── */
+.media-progress-container {
+    spacing: 10px;
+    padding: 2px 0;
+}
+
+.media-time-text {
+    font-size: 8.5pt;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.45);
+    font-variant-numeric: tabular-nums;
+}
+
+.media-progress-track {
+    height: 5px;
+    border-radius: 9999px;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.media-progress-fill {
+    height: 5px;
+    border-radius: 9999px;
+    background-color: #38bdf8;
+    transition-duration: 180ms;
+}
+
+/* ── Popup Controls Deck ── */
+.media-popup-controls {
+    spacing: 14px;
+    padding-top: 6px;
+}
+
+.media-popup-control-btn {
+    border-radius: 9999px;
+    padding: 8px;
+    color: rgba(255, 255, 255, 0.72);
+    transition-duration: 150ms;
+}
+
+.media-popup-control-btn:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+.media-popup-control-btn:active {
+    background-color: rgba(255, 255, 255, 0.22);
+}
+
+.media-popup-play-btn {
+    background-color: rgba(255, 255, 255, 0.14);
+    border-radius: 9999px;
+    padding: 10px;
+    color: #ffffff;
+}
+
+.media-popup-play-btn:hover {
+    background-color: rgba(56, 189, 248, 0.35);
+}
+
+.media-btn-active {
+    color: #38bdf8 !important;
+    background-color: rgba(56, 189, 248, 0.15);
+}

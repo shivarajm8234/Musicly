@@ -1,0 +1,8 @@
+{
+  "name": "Media Controller",
+  "description": "Advanced media controller for the Top Bar",
+  "uuid": "media-controller@satoru.local",
+  "shell-version": [
+    "50"
+  ]
+}
