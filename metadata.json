@@ -1,8 +1,14 @@
 {
-  "name": "Media Controller",
-  "description": "Advanced media controller for the Top Bar",
+  "name": "Musicly",
+  "description": "A feature-rich MPRIS media controller for the GNOME Shell top bar",
   "uuid": "media-controller@satoru.local",
+  "url": "https://github.com/shivarajm8234/Musicly",
   "shell-version": [
+    "45",
+    "46",
+    "47",
+    "48",
+    "49",
     "50"
   ]
 }

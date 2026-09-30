@@ -94,7 +94,7 @@ function getAppInfo(player) {
 const MediaIndicator = GObject.registerClass(
 class MediaIndicator extends PanelMenu.Button {
     _init() {
-        super._init(0.0, _('Media Controller'));
+        super._init(0.0, _('Musicly'));
 
         // State
         this._isDestroyed = false;
@@ -109,6 +109,7 @@ class MediaIndicator extends PanelMenu.Button {
         this._shuffleOn = false;
         this._loopStatus = 'None';
         this._eqStep = 0;
+        this._lastCoverUrl = null;
 
         // ── Top Bar Container ──
         this._topContainer = new St.BoxLayout({
@@ -617,10 +618,15 @@ class MediaIndicator extends PanelMenu.Button {
         if (this._isDestroyed || !this._playerProxy) return;
         try {
             const meta = this._playerProxy.Metadata;
-            if (meta && meta['mpris:length'])
-                this._trackLength = meta['mpris:length'].deepUnpack() ?? 0;
-            else
+            if (meta && meta['mpris:length']) {
+                let len = meta['mpris:length'];
+                // Unpack GLib.Variant if needed
+                if (len && typeof len.deepUnpack === 'function')
+                    len = len.deepUnpack();
+                this._trackLength = (typeof len === 'number' && isFinite(len)) ? len : 0;
+            } else {
                 this._trackLength = 0;
+            }
         } catch (_) {
             this._trackLength = 0;
         }
@@ -729,9 +735,20 @@ class MediaIndicator extends PanelMenu.Button {
                     try {
                         let reply = conn.call_finish(res);
                         if (reply) {
-                            let v = reply.deepUnpack();
-                            if (v && v.length > 0) {
-                                this._currentPosition = v[0];
+                            // reply is (v), deepUnpack gives the inner variant
+                            let val = reply.deepUnpack();
+                            // Unwrap nested variant/array
+                            if (val && typeof val.deepUnpack === 'function')
+                                val = val.deepUnpack();
+                            else if (Array.isArray(val) && val.length > 0)
+                                val = val[0];
+                            // Further unwrap if still a GLib.Variant
+                            if (val && typeof val.deepUnpack === 'function')
+                                val = val.deepUnpack();
+
+                            const pos = Number(val);
+                            if (isFinite(pos)) {
+                                this._currentPosition = pos;
                                 this._syncProgressBar();
                             }
                         }
@@ -908,20 +925,27 @@ class MediaIndicator extends PanelMenu.Button {
 
         // Album Art
         const coverUrl = this._activePlayer.trackCoverUrl;
-        if (coverUrl) {
+        if (coverUrl && coverUrl !== this._lastCoverUrl) {
+            this._lastCoverUrl = coverUrl;
             try {
                 const file = Gio.File.new_for_uri(coverUrl);
-                const gicon = new Gio.FileIcon({ file });
-                const img = new St.Icon({
-                    gicon,
-                    icon_size: 96,
-                    style_class: 'media-album-image',
-                });
-                this._albumArtContainer.set_child(img);
+                if (file.query_exists(null)) {
+                    // Use background-image CSS for bitmap art (JPEG/PNG from browsers)
+                    const artBin = new St.Bin({
+                        style_class: 'media-album-image',
+                        style: `background-image: url("${coverUrl}"); background-size: cover; background-position: center; width: 96px; height: 96px;`,
+                        x_align: Clutter.ActorAlign.CENTER,
+                        y_align: Clutter.ActorAlign.CENTER,
+                    });
+                    this._albumArtContainer.set_child(artBin);
+                } else {
+                    this._albumArtContainer.set_child(this._albumIconFallback);
+                }
             } catch (_) {
                 this._albumArtContainer.set_child(this._albumIconFallback);
             }
-        } else {
+        } else if (!coverUrl) {
+            this._lastCoverUrl = null;
             this._albumArtContainer.set_child(this._albumIconFallback);
         }
 
@@ -966,9 +990,14 @@ class MediaIndicator extends PanelMenu.Button {
     }
 
     _formatTime(us) {
-        const totalSec = Math.floor(us / 1000000);
-        const m = Math.floor(totalSec / 60);
+        if (!us || !isFinite(us) || us < 0) return '0:00';
+        const totalSec = Math.floor(Number(us) / 1000000);
+        if (!isFinite(totalSec) || totalSec < 0) return '0:00';
+        const h = Math.floor(totalSec / 3600);
+        const m = Math.floor((totalSec % 3600) / 60);
         const s = totalSec % 60;
+        if (h > 0)
+            return `${h}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
         return `${m}:${s.toString().padStart(2, '0')}`;
     }
 
@@ -1008,7 +1037,7 @@ class MediaIndicator extends PanelMenu.Button {
     }
 });
 
-export default class MediaControllerExtension extends Extension {
+export default class MusiclyExtension extends Extension {
     enable() {
         this._indicator = new MediaIndicator();
         // Place right beside Quick Settings / Wifi button on the right

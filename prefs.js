@@ -4,7 +4,7 @@ import Gio from 'gi://Gio';
 
 import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
-export default class MediaControllerPreferences extends ExtensionPreferences {
+export default class MusiclyPreferences extends ExtensionPreferences {
     fillPreferencesWindow(window) {
         const page = new Adw.PreferencesPage();
         const group = new Adw.PreferencesGroup({
